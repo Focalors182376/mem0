@@ -1599,7 +1599,7 @@ class AsyncMemory(MemoryBase):
                                 await asyncio.to_thread(
                                     self.vector_store.update,
                                     vector_id=mem_id,
-                                    vector=None,  # Keep same embeddings
+                                    vector=existing_memory.vector, # fixed to use vector None
                                     payload=updated_metadata,
                                 )
                                 logger.info(f"Updated session IDs for memory {mem_id} (async)")

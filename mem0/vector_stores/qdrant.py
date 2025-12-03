@@ -217,7 +217,9 @@ class Qdrant(VectorStoreBase):
         Returns:
             dict: Retrieved vector.
         """
-        result = self.client.retrieve(collection_name=self.collection_name, ids=[vector_id], with_payload=True)
+        # BUGFIX: Must include with_vectors=True to retrieve the actual vector data
+        # Without this, vector field will be None and cause validation errors when updating
+        result = self.client.retrieve(collection_name=self.collection_name, ids=[vector_id], with_payload=True, with_vectors=True)
         return result[0] if result else None
 
     def list_cols(self) -> list:
